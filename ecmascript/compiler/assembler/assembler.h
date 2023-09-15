@@ -22,9 +22,11 @@ enum class Triple {
     TRIPLE_AMD64,
     TRIPLE_AARCH64,
     TRIPLE_ARM32,
+    TRIPLE_RISCV64,
 };
 
 #define TARGET_X64 "x86_64-unknown-linux-gnu"
+#define TARGET_RISCV64 "riscv64-unknown-linux-gnu"
 #define TARGET_AARCH64 "aarch64-unknown-linux-gnu"
 #define TARGET_ARM32 "arm-unknown-linux-gnu"
 
@@ -39,6 +41,9 @@ public:
 #elif defined(PANDA_TARGET_ARM32)
     static constexpr int SP = 13;  /* x13 */
     static constexpr int FP = 11;  /* x11 */
+#elif defined(PANDA_TARGET_RV64)
+    static constexpr int SP = 2;
+    static constexpr int FP = 8;
 #else
     static constexpr int SP = -1;
     static constexpr int FP = -1;

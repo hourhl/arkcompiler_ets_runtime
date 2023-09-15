@@ -442,6 +442,12 @@ config("ark_jsruntime_common_config") {
       "PANDA_TARGET_AMD64",
       "PANDA_USE_32_BIT_POINTER",
     ]
+  } else if (current_cpu == "riscv64") {
+    defines += [
+      "PANDA_TARGET_64",
+      "PANDA_TARGET_RV64",
+      "PANDA_USE_32_BIT_POINTER",
+    ]
   }
   if (enable_ark_intl) {
     defines += [ "ARK_SUPPORT_INTL" ]
@@ -503,7 +509,7 @@ config("icu_path_test_config") {
 # asm interpreter enable config
 config("asm_interp_enable_config") {
   if ((current_cpu == "amd64" || current_cpu == "x64" ||
-       current_cpu == "x86_64" || current_cpu == "arm64") && !is_mingw &&
+       current_cpu == "x86_64" || current_cpu == "arm64" || current_cpu == "riscv64") && !is_mingw &&
       !is_mac && target_os != "ios" && !is_emulator) {
     defines = [ "SUPPORT_ENABLE_ASM_INTERP" ]
   }
@@ -1044,7 +1050,7 @@ ohos_source_set("libark_jsruntime_test_set") {
   }
 
   if ((current_cpu == "amd64" || current_cpu == "x64" ||
-       current_cpu == "x86_64" || current_cpu == "arm64") && !is_mingw &&
+       current_cpu == "x86_64" || current_cpu == "arm64" || current_cpu == "riscv64") && !is_mingw &&
       !is_mac && target_os != "ios") {
     deps += [ "ecmascript/compiler:libark_stub_set" ]
   } else {
