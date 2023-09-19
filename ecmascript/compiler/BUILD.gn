@@ -236,6 +236,12 @@ ohos_source_set("libark_jsoptimizer_set") {
     "LLVMAArch64AsmParser",
     "LLVMFrontendOpenMP",
     "LLVMBitWriter",
+    "LLVMRISCVAsmParser",
+    "LLVMRISCVCodeGen",
+    "LLVMRISCVDesc",
+    "LLVMRISCVDisassembler",
+    "LLVMRISCVInfo",
+    "LLVMFrontendOpenMP",
   ]
 
   if (!is_mac && !is_ios) {

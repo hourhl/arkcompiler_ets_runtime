@@ -177,9 +177,14 @@ public:
         return triple_ == Triple::TRIPLE_AMD64;
     }
 
+    inline bool IsRiscv64() const
+    {
+        return triple_ == Triple::TRIPLE_RISCV64;
+    }
+
     inline bool Is64Bit() const
     {
-        return IsAArch64() || IsAmd64();
+        return IsAArch64() || IsAmd64() || IsRiscv64();
     }
 
     Triple GetTriple() const
@@ -215,6 +220,10 @@ public:
 private:
     inline Triple GetTripleFromString(const std::string &triple)
     {
+        if (triple.compare(TARGET_RISCV64) == 0) {
+            return Triple::TRIPLE_RISCV64;
+        }
+
         if (triple.compare(TARGET_X64) == 0) {
             return Triple::TRIPLE_AMD64;
         }

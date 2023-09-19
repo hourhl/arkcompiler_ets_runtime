@@ -416,6 +416,13 @@ void LLVMAssembler::Initialize(LOptions option)
         LLVMInitializeAArch64AsmPrinter();
         LLVMInitializeAArch64AsmParser();
         LLVMInitializeAArch64Target();
+    } else if (triple.compare(TARGET_RISCV64) == 0) {
+        LLVMInitializeRISCVTargetInfo();
+        LLVMInitializeRISCVTargetMC();
+        LLVMInitializeRISCVDisassembler();
+        LLVMInitializeRISCVAsmPrinter();
+        LLVMInitializeRISCVAsmParser();
+        LLVMInitializeRISCVTarget();
     } else {
         LOG_ECMA(FATAL) << "this branch is unreachable";
         UNREACHABLE();
