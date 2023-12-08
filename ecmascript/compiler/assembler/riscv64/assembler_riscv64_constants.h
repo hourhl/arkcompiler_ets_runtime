@@ -34,27 +34,27 @@ static const int RegDSize = 64;
 static const int RegWSize = 32;
 
 enum AddSubOpFunct {
-    Add     = 0x00000033,
-    Addw    = 0x0000003b,
-    Sub     = 0x40000033,
-    Subw    = 0x4000003b,
-    Slt     = 0x00002033,
-    Sltu    = 0x00003033,
+    ADD     = 0x00000033,
+    ADDW    = 0x0000003b,
+    SUB     = 0x40000033,
+    SUBW    = 0x4000003b,
+    SLT     = 0x00002033,
+    SLTU    = 0x00003033,
 };
 
 enum ShiftOpFunct {
-    Sll     = 0x00001033,
-    Sllw    = 0x0000103b,
-    Srl     = 0x00005033,
-    Srlw    = 0x0000503b,
-    Sra     = 0x40005033,
-    Sraw    = 0x40005033,
+    SLL     = 0x00001033,
+    SLLW    = 0x0000103b,
+    SRL     = 0x00005033,
+    SRLW    = 0x0000503b,
+    SRA     = 0x40005033,
+    SRAW    = 0x40005033,
 };
 
 enum BitwiseOpFunct {
-    Xor = 0x00004033,
-    Or  = 0x00006033,
-    And = 0x00007033,
+    XOR = 0x00004033,
+    OR  = 0x00006033,
+    AND = 0x00007033,
 };
 
 #define R_TYPE_FIELD_LIST(V)    \
