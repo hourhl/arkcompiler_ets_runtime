@@ -56,5 +56,25 @@ enum BitwiseOpFunct {
     OR  = 0x00006033,
     AND = 0x00007033,
 };
+
+#define R_TYPE_FIELD_LIST(V)    \
+    V(R_TYPE, opcode,  6,  0)   \
+    V(R_TYPE,     rd, 11,  7)   \
+    V(R_TYPE, funct3, 14, 12)   \
+    V(R_TYPE,    rs1, 19, 15)   \
+    V(R_TYPE,    rs2, 24, 20)   \
+    V(R_TYPE, funct7, 31, 25)
+
+#define DECL_FIELDS_IN_INSTRUCTION(INSTNAME, FIELD_NAME, HIGHBITS, LOWBITS) \
+static const uint32_t INSTNAME##_##FIELD_NAME##_HIGHBITS = HIGHBITS;  \
+static const uint32_t INSTNAME##_##FIELD_NAME##_LOWBITS = LOWBITS;    \
+static const uint32_t INSTNAME##_##FIELD_NAME##_WIDTH = ((HIGHBITS - LOWBITS) + 1); \
+static const uint32_t INSTNAME##_##FIELD_NAME##_MASK = (((1 << INSTNAME##_##FIELD_NAME##_WIDTH) - 1) << LOWBITS);
+
+#define DECL_INSTRUCTION_FIELDS(V)  \
+    R_TYPE_FIELD_LIST(V)
+
+DECL_INSTRUCTION_FIELDS(DECL_FIELDS_IN_INSTRUCTION)
+#undef DECL_INSTRUCTION_FIELDS
 };  // namespace panda::ecmascript::riscv64
 #endif
