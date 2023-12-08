@@ -111,4 +111,45 @@ public:
     EcmaHandleScope *scope {nullptr};
     Chunk *chunk_ {nullptr};
 };
+
+#define __ masm.
+HWTEST_F_L0(AssemblerRiscv64Test, AddSub)
+{
+    std::string expectResult(
+            "00000000:002080b3 \tadd\tra, ra, sp\n"
+            "00000004:003100b3 \tadd\tra, sp, gp\n"
+            "00000008:41f887b3 \tsub\ta5, a7, t6\n"
+            "0000000c:416409b3 \tsub\ts3, s0, s6\n");
+    AssemblerRiscv64 masm(chunk_);
+    __ Add(Register(RA), Register(RA), Register(SP));
+    __ Add(Register(RA), Register(SP), Register(GP));
+    __ Sub(Register(A5), Register(A7), Register(T6));
+    __ Sub(Register(S3), Register(FP), Register(S6));
+
+    std::ostringstream oss;
+    DisassembleChunk(TARGET_RISCV64, &masm, oss);
+    ASSERT_EQ(oss.str(), expectResult);
+}
+
+
+HWTEST_F_L0(AssemblerRiscv64Test, SllSrl)
+{
+    std::string expectResult(
+            "00000000:01f897b3 \tsll\ta5, a7, t6\n"
+            "00000004:016419b3 \tsll\ts3, s0, s6\n"
+            "00000008:01f8d7b3 \tsrl\ta5, a7, t6\n"
+            "0000000c:016459b3 \tsrl\ts3, s0, s6\n");
+    AssemblerRiscv64 masm(chunk_);
+    __ Sll(Register(A5), Register(A7), Register(T6));
+    __ Sll(Register(S3), Register(FP), Register(S6));
+    __ Srl(Register(A5), Register(A7), Register(T6));
+    __ Srl(Register(S3), Register(FP), Register(S6));
+    std::ostringstream oss;
+    DisassembleChunk(TARGET_RISCV64, &masm, oss);
+    ASSERT_EQ(oss.str(), expectResult);
+}
+
+
+
+#undef __
 }  // namespace panda::test
