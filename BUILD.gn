@@ -121,6 +121,12 @@ group("ark_js_perform") {
   deps += [ "//arkcompiler/ets_runtime/test/perform:perform" ]
 }
 
+group("ark_compiler_unittest") {
+  testonly = true
+  deps = []
+  deps += ["ecmascript/compiler/tests:host_unittest" ]
+}
+
 group("ark_unittest") {
   testonly = true
   deps = []
