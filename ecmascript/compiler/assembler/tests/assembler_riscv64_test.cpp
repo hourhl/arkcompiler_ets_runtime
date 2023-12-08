@@ -32,7 +32,7 @@
 namespace panda::test {
 using namespace panda::ecmascript;
 using namespace panda::ecmascript::riscv64;
-class AssemblerRISCV64Test : public testing::Test {
+class AssemblerRiscv64Test : public testing::Test {
 public:
     static void SetUpTestCase()
     {
