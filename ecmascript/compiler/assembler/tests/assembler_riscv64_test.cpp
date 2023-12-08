@@ -139,6 +139,22 @@ HWTEST_F_L0(AssemblerRiscv64Test, AddSub)
     ASSERT_EQ(oss.str(), expectResult);
 }
 
+HWTEST_F_L0(AssemblerRiscv64Test, AddSub_32Width)
+{
+    std::string expectResult(
+            "00000000:000f00bb \taddw\tra, t5, zero\n"
+            "00000004:009c8dbb \taddw\ts11, s9, s1\n"
+            "00000008:41d382bb \tsubw\tt0, t2, t4\n"
+            "0000000c:40b501bb \tsubw\tgp, a0, a1\n");
+    AssemblerRiscv64 masm(chunk_);
+    __ Addw(Register(RA), Register(T5), Register(ZERO));
+    __ Addw(Register(S11), Register(S9), Register(S1));
+    __ Subw(Register(T0), Register(T2), Register(T4));
+    __ Subw(Register(GP), Register(A0), Register(A1));
+    std::ostringstream oss;
+    DisassembleChunk(TARGET_RISCV64, &masm, oss);
+    ASSERT_EQ(oss.str(), expectResult);
+}
 
 HWTEST_F_L0(AssemblerRiscv64Test, Shift)
 {
@@ -156,6 +172,27 @@ HWTEST_F_L0(AssemblerRiscv64Test, Shift)
     __ Srl(Register(S3), Register(FP), Register(S6));
     __ Sra(Register(A5), Register(A7), Register(T6));
     __ Sra(Register(S3), Register(FP), Register(S6));
+    std::ostringstream oss;
+    DisassembleChunk(TARGET_RISCV64, &masm, oss);
+    ASSERT_EQ(oss.str(), expectResult);
+}
+
+HWTEST_F_L0(AssemblerRiscv64Test, Shift_32Width)
+{
+    std::string expectResult(
+            "00000000:01f897bb \tsllw\ta5, a7, t6\n"
+            "00000004:016419bb \tsllw\ts3, s0, s6\n"
+            "00000008:01f8d7bb \tsrlw\ta5, a7, t6\n"
+            "0000000c:016459bb \tsrlw\ts3, s0, s6\n"
+            "00000010:41f8d7bb \tsraw\ta5, a7, t6\n"
+            "00000014:416459bb \tsraw\ts3, s0, s6\n");
+    AssemblerRiscv64 masm(chunk_);
+    __ Sllw(Register(A5), Register(A7), Register(T6));
+    __ Sllw(Register(S3), Register(FP), Register(S6));
+    __ Srlw(Register(A5), Register(A7), Register(T6));
+    __ Srlw(Register(S3), Register(FP), Register(S6));
+    __ Sraw(Register(A5), Register(A7), Register(T6));
+    __ Sraw(Register(S3), Register(FP), Register(S6));
     std::ostringstream oss;
     DisassembleChunk(TARGET_RISCV64, &masm, oss);
     ASSERT_EQ(oss.str(), expectResult);
