@@ -62,6 +62,8 @@ ohos_source_set("libark_jsoptimizer_set") {
     "array_bounds_check_elimination.cpp",
     "assembler/aarch64/assembler_aarch64.cpp",
     "assembler/aarch64/extend_assembler.cpp",
+    "assembler/riscv64/assembler_riscv64.cpp",
+    "assembler/riscv64/extend_assembler.cpp",
     "assembler/x64/assembler_x64.cpp",
     "assembler/x64/extended_assembler_x64.cpp",
     "assembler_module.cpp",
