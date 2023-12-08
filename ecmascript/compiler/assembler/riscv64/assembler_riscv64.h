@@ -65,20 +65,31 @@ public:
     }
     // Integer Register-Register Operations (R-types)
     void Add(const Register &rd, const Register &rs1, const Register &rs2);
+    void Addw(const Register &rd, const Register &rs1, const Register &rs2);
     void Sub(const Register &rd, const Register &rs1, const Register &rs2);
-    void Sll(const Register &rd, const Register &rs1, const Register &rs2);
+    void Subw(const Register &rd, const Register &rs1, const Register &rs2);
     void Slt(const Register &rd, const Register &rs1, const Register &rs2);
     void Sltu(const Register &rd, const Register &rs1, const Register &rs2);
-    void Xor(const Register &rd, const Register &rs1, const Register &rs2);
+    void Sll(const Register &rd, const Register &rs1, const Register &rs2);
+    void Sllw(const Register &rd, const Register &rs1, const Register &rs2);
     void Srl(const Register &rd, const Register &rs1, const Register &rs2);
+    void Srlw(const Register &rd, const Register &rs1, const Register &rs2);
     void Sra(const Register &rd, const Register &rs1, const Register &rs2);
+    void Sraw(const Register &rd, const Register &rs1, const Register &rs2);
+    void Xor(const Register &rd, const Register &rs1, const Register &rs2);
     void Or(const Register &rd, const Register &rs1, const Register &rs2);
     void And(const Register &rd, const Register &rs1, const Register &rs2);
-    void Addw(const Register &rd, const Register &rs1, const Register &rs2);
-    void Subw(const Register &rd, const Register &rs1, const Register &rs2);
-    void Sllw(const Register &rd, const Register &rs1, const Register &rs2);
-    void Srlw(const Register &rd, const Register &rs1, const Register &rs2);
-    void Sraw(const Register &rd, const Register &rs1, const Register &rs2);
+private:
+    // R_TYPE field defines
+    inline uint32_t Rd(uint32_t id){
+        return (id << R_TYPE_rd_LOWBITS) & R_TYPE_rd_MASK;
+    }
+    inline uint32_t Rs1(uint32_t id){
+        return (id << R_TYPE_rs1_LOWBITS) & R_TYPE_rs1_MASK;
+    }
+    inline uint32_t Rs2(uint32_t id){
+        return (id << R_TYPE_rs2_LOWBITS) & R_TYPE_rs2_MASK;
+    }
 };
 } // namespace panda::ecmascript::riscv64
 #endif
