@@ -79,7 +79,7 @@ enum ShiftOpFunct {
     SRL     = 0x00005033,
     SRLW    = 0x0000503b,
     SRA     = 0x40005033,
-    SRAW    = 0x40005033,
+    SRAW    = 0x4000503b,
 };
 
 enum BitwiseOpFunct {
