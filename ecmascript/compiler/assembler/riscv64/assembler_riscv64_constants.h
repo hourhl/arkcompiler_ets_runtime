@@ -96,5 +96,16 @@ DECL_INSTRUCTION_FIELDS(DECL_FIELDS_IN_INSTRUCTION)
     V(Xor )                     \
     V(Or  )                     \
     V(And )                     \
+
+#define EMIT_R_TYPE_INST(INSTNAME) \
+void AssemblerRiscv64::##INSTNAME(const Register &rd, const Register &rs1, const Register &rs2) \
+{ \
+    uint32_t rd = Rd(rd.GetId()); \
+    uint32_t rs1 = Rs1(rs1.GetId()); \
+    uint32_t rs2 = Rs2(rs2.GetId()); \
+    uint32_t code = rd | rs1 | rs2 | opc | INSTNAME; \
+    Emit(code); \
+}
+
 };  // namespace panda::ecmascript::riscv64
 #endif
