@@ -111,22 +111,22 @@ DECL_INSTRUCTION_FIELDS(DECL_FIELDS_IN_INSTRUCTION)
 #define EMIT_INSTS \
     EMIT_R_TYPE_INSTS(EMIT_R_TYPE_INST) \
 
-#define EMIT_R_TYPE_INSTS(V)    \
-    V(Add, ADD)                     \
-    V(Addw, ADDW)                     \
-    V(Sub, SUB)                     \
-    V(Subw, SUBW)                     \
-    V(Slt, SLT)                     \
-    V(Sltu, SLTU)                     \
-    V(Sll, SLL)                     \
-    V(Sllw, SLLW)                     \
-    V(Srl, SRL)                     \
-    V(Srlw, SRLW)                     \
-    V(Sra, SRA)                     \
-    V(Sraw, SRAW)                     \
-    V(Xor, XOR)                     \
-    V(Or, OR)                     \
-    V(And, AND)                     \
+#define EMIT_R_TYPE_INSTS(V) \
+    V( Add,  ADD)            \
+    V(Addw, ADDW)            \
+    V( Sub,  SUB)            \
+    V(Subw, SUBW)            \
+    V( Slt,  SLT)            \
+    V(Sltu, SLTU)            \
+    V( Sll,  SLL)            \
+    V(Sllw, SLLW)            \
+    V( Srl,  SRL)            \
+    V(Srlw, SRLW)            \
+    V( Sra,  SRA)            \
+    V(Sraw, SRAW)            \
+    V( Xor,  XOR)            \
+    V(  Or,   OR)            \
+    V( And,  AND)            \
 
 #define EMIT_R_TYPE_INST(INSTNAME, INSTID) \
 void AssemblerRiscv64::INSTNAME(const Register &rd, const Register &rs1, const Register &rs2) \
