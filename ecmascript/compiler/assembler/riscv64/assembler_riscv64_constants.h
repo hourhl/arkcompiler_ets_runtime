@@ -76,5 +76,25 @@ static const uint32_t INSTNAME##_##FIELD_NAME##_MASK = (((1 << INSTNAME##_##FIEL
 
 DECL_INSTRUCTION_FIELDS(DECL_FIELDS_IN_INSTRUCTION)
 #undef DECL_INSTRUCTION_FIELDS
+
+#define EMIT_INSTS \
+    EMIT_R_TYPE_INSTS(EMIT_R_TYPE_INST) \
+
+#define EMIT_R_TYPE_INSTS(V)    \
+    V(Add )                     \
+    V(Addw)                     \
+    V(Sub )                     \
+    V(Subw)                     \
+    V(Slt )                     \
+    V(Sltu)                     \
+    V(Sll )                     \
+    V(Sllw)                     \
+    V(Srl )                     \
+    V(Srlw)                     \
+    V(Sra )                     \
+    V(Sraw)                     \
+    V(Xor )                     \
+    V(Or  )                     \
+    V(And )                     \
 };  // namespace panda::ecmascript::riscv64
 #endif
