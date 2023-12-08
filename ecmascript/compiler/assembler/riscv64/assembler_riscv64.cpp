@@ -9,5 +9,5 @@
 namespace panda::ecmascript::riscv64 {
 using namespace panda::ecmascript::base;
 
-EMIT_INST
+EMIT_INSTS
 } // panda::ecmascript::riscv64

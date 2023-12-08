@@ -81,30 +81,30 @@ DECL_INSTRUCTION_FIELDS(DECL_FIELDS_IN_INSTRUCTION)
     EMIT_R_TYPE_INSTS(EMIT_R_TYPE_INST) \
 
 #define EMIT_R_TYPE_INSTS(V)    \
-    V(Add )                     \
-    V(Addw)                     \
-    V(Sub )                     \
-    V(Subw)                     \
-    V(Slt )                     \
-    V(Sltu)                     \
-    V(Sll )                     \
-    V(Sllw)                     \
-    V(Srl )                     \
-    V(Srlw)                     \
-    V(Sra )                     \
-    V(Sraw)                     \
-    V(Xor )                     \
-    V(Or  )                     \
-    V(And )                     \
+    V(Add, ADD)                     \
+    V(Addw, ADDW)                     \
+    V(Sub, SUB)                     \
+    V(Subw, SUBW)                     \
+    V(Slt, SLT)                     \
+    V(Sltu, SLTU)                     \
+    V(Sll, SLL)                     \
+    V(Sllw, SLLW)                     \
+    V(Srl, SRL)                     \
+    V(Srlw, SRLW)                     \
+    V(Sra, SRA)                     \
+    V(Sraw, SRAW)                     \
+    V(Xor, XOR)                     \
+    V(Or, OR)                     \
+    V(And, AND)                     \
 
-#define EMIT_R_TYPE_INST(INSTNAME) \
-void AssemblerRiscv64::##INSTNAME(const Register &rd, const Register &rs1, const Register &rs2) \
+#define EMIT_R_TYPE_INST(INSTNAME, INSTID) \
+void AssemblerRiscv64::INSTNAME(const Register &rd, const Register &rs1, const Register &rs2) \
 { \
-    uint32_t rd = Rd(rd.GetId()); \
-    uint32_t rs1 = Rs1(rs1.GetId()); \
-    uint32_t rs2 = Rs2(rs2.GetId()); \
-    uint32_t code = rd | rs1 | rs2 | opc | INSTNAME; \
-    Emit(code); \
+    uint32_t rd_id = Rd(rd.GetId()); \
+    uint32_t rs1_id = Rs1(rs1.GetId()); \
+    uint32_t rs2_id = Rs2(rs2.GetId()); \
+    uint32_t code = rd_id | rs1_id | rs2_id | INSTID; \
+    EmitU32(code); \
 }
 
 };  // namespace panda::ecmascript::riscv64
