@@ -220,5 +220,44 @@ HWTEST_F_L0(AssemblerRiscv64Test, BitwiseOp)
     ASSERT_EQ(oss.str(), expectResult);
 }
 
+HWTEST_F_L0(AssemblerRiscv64Test, Beq)
+{
+	std::string expectResult(
+        	"00000000:00b50463 \tbeq\ta0, a1, 8\n"
+        	"00000004:00f68863 \tbeq\ta3, a5, 16\n");
+    	AssemblerRiscv64 masm(chunk_);
+	__ Beq(Register(A0), Register(A1),8);
+	__ Beq(Register(A3), Register(A5),16);
+    	std::ostringstream oss;
+    	DisassembleChunk(TARGET_RISCV64, &masm, oss);
+    	ASSERT_EQ(oss.str(), expectResult);
+}
+
+HWTEST_F_L0(AssemblerRiscv64Test, Bne)
+{
+	std::string expectResult(
+        	"00000000:00c09463 \tbne\tra, a2, 8\n"
+           	"00000004:00259863 \tbne\ta1, sp, 16\n");
+    	AssemblerRiscv64 masm(chunk_);
+	__ Bne(Register(RA), Register(A2),8);
+	__ Bne(Register(A1), Register(SP),16);
+    	std::ostringstream oss;
+    	DisassembleChunk(TARGET_RISCV64, &masm, oss);
+    	ASSERT_EQ(oss.str(), expectResult);
+}
+
+HWTEST_F_L0(AssemblerRiscv64Test, Blt)
+{
+	std::string expectResult(
+        	"00000000:00d54463 \tblt\ta0, a3, 8\n"
+            	"00000004:00184263 \tblt\ta6, ra, 4\n");
+    	AssemblerRiscv64 masm(chunk_);
+	__ Blt(Register(A0), Register(A3),8);
+	__ Blt(Register(A6), Register(RA),4);
+    	std::ostringstream oss;
+    	DisassembleChunk(TARGET_RISCV64, &masm, oss);
+    	ASSERT_EQ(oss.str(), expectResult);
+}
+
 #undef __
 }  // namespace panda::test

@@ -88,6 +88,13 @@ enum BitwiseOpFunct {
     AND = 0x00007033,
 };
 
+
+enum BOpFunct{
+    BEQ = 0x00000063,
+    BNE = 0x00001063,
+    BLT = 0x00004063,  
+};
+
 #define R_TYPE_FIELD_LIST(V)    \
     V(R_TYPE, opcode,  6,  0)   \
     V(R_TYPE,     rd, 11,  7)   \
@@ -95,6 +102,14 @@ enum BitwiseOpFunct {
     V(R_TYPE,    rs1, 19, 15)   \
     V(R_TYPE,    rs2, 24, 20)   \
     V(R_TYPE, funct7, 31, 25)
+    
+#define B_TYPE_FIELD_LIST(V)    \
+    V(B_TYPE, opcode,  6,  0)   \
+    V(B_TYPE,   imm1, 11,  7)   \
+    V(B_TYPE, funct3, 14, 12)   \
+    V(B_TYPE,    rs1, 19, 15)   \
+    V(B_TYPE,    rs2, 24, 20)   \
+    V(B_TYPE,   imm2, 31, 25)
 
 #define DECL_FIELDS_IN_INSTRUCTION(INSTNAME, FIELD_NAME, HIGHBITS, LOWBITS) \
 static const uint32_t INSTNAME##_##FIELD_NAME##_HIGHBITS = HIGHBITS;  \
@@ -103,13 +118,15 @@ static const uint32_t INSTNAME##_##FIELD_NAME##_WIDTH = ((HIGHBITS - LOWBITS) + 
 static const uint32_t INSTNAME##_##FIELD_NAME##_MASK = (((1 << INSTNAME##_##FIELD_NAME##_WIDTH) - 1) << LOWBITS);
 
 #define DECL_INSTRUCTION_FIELDS(V)  \
-    R_TYPE_FIELD_LIST(V)
+    R_TYPE_FIELD_LIST(V) \
+    B_TYPE_FIELD_LIST(V)
 
 DECL_INSTRUCTION_FIELDS(DECL_FIELDS_IN_INSTRUCTION)
 #undef DECL_INSTRUCTION_FIELDS
 
 #define EMIT_INSTS \
     EMIT_R_TYPE_INSTS(EMIT_R_TYPE_INST) \
+    EMIT_B_TYPE_INSTS(EMIT_B_TYPE_INST) 
 
 #define EMIT_R_TYPE_INSTS(V) \
     V( Add,  ADD)            \
@@ -126,7 +143,12 @@ DECL_INSTRUCTION_FIELDS(DECL_FIELDS_IN_INSTRUCTION)
     V(Sraw, SRAW)            \
     V( Xor,  XOR)            \
     V(  Or,   OR)            \
-    V( And,  AND)            \
+    V( And,  AND)            
+
+#define EMIT_B_TYPE_INSTS(V) \
+    V(Beq, BEQ)              \
+    V(Bne, BNE)              \
+    V(Blt, BLT)
 
 #define EMIT_R_TYPE_INST(INSTNAME, INSTID) \
 void AssemblerRiscv64::INSTNAME(const Register &rd, const Register &rs1, const Register &rs2) \
@@ -135,6 +157,23 @@ void AssemblerRiscv64::INSTNAME(const Register &rd, const Register &rs1, const R
     uint32_t rs1_id = Rs1(rs1.GetId()); \
     uint32_t rs2_id = Rs2(rs2.GetId()); \
     uint32_t code = rd_id | rs1_id | rs2_id | INSTID; \
+    EmitU32(code); \
+}
+
+#define B_TYPE_Imm_Left_High 31
+#define B_TYPE_Imm_Left_Low 25
+#define B_TYPE_Imm_Right_High 11
+#define B_TYPE_Imm_Right_Low 7
+#define EMIT_B_TYPE_INST(INSTNAME, INSTID) \
+void AssemblerRiscv64::INSTNAME(const Register &rs1, const Register &rs2, const Immediate& imm12) \
+{ \
+    uint32_t rs1_id = Rs1(rs1.GetId()); \
+    uint32_t rs2_id = Rs2(rs2.GetId()); \
+    uint32_t imm = ((imm12.Value() & 0x1000) << (B_TYPE_Imm_Left_High - 12)) /*[12] -> [31]*/\
+                  | ((imm12.Value() & 0x7E0) << (B_TYPE_Imm_Left_Low - 5)) /*[10:5] -> [30:25] */ \
+                  | ((imm12.Value() & 0x1E) << (B_TYPE_Imm_Right_High - 4)) /*[4:1] -> [11:8] */ \
+                  | ((imm12.Value() & 0x800) >> (11 - B_TYPE_Imm_Right_Low));/*[11] -> [7] */ \
+    uint32_t code = imm | rs1_id | rs2_id | INSTID; \
     EmitU32(code); \
 }
 
