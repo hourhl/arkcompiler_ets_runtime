@@ -96,24 +96,6 @@ private:
         return (id << R_TYPE_rs2_LOWBITS) & R_TYPE_rs2_MASK;
     }
     
-    // B_TYPE field defines
-    /*inline uint32_t BImm1(uint32_t imm1){
-        return (imm1 << B_TYPE_imm1_LOWBITS) & B_TYPE_imm1_MASK;
-    }
-    inline uint32_t BImm2(uint32_t imm2){
-        return (imm2 << B_TYPE_imm2_LOWBITS) & B_TYPE_imm2_MASK;
-    }
-
-    inline uint32_t BRs1(uint32_t id){
-        return (id << B_TYPE_rs1_LOWBITS) & B_TYPE_rs1_MASK;
-    }
-    inline uint32_t BRs2(uint32_t id){
-        return (id << B_TYPE_rs2_LOWBITS) & B_TYPE_rs2_MASK;
-   }
-
-    inline uint32_t Bfunct3(uint32_t funct3){
-        return (funct3 << B_TYPE_funct3_LOWBITS) & B_TYPE_funct3_MASK;
-    }*/
 };
 } // namespace panda::ecmascript::riscv64
 #endif
